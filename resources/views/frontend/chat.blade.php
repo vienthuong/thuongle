@@ -14,8 +14,10 @@
       Chat
     </div>
   </div>
+  <div id="wrapper">
   <ul class="messages">
   </ul>
+  </div>
   <div class="bottom_wrapper clearfix">
     <div class="message_input_wrapper">
       <input class="message_input" placeholder="Type your message here..." />

@@ -55,16 +55,43 @@ body {
   font-size: 20px;
 }
 .iScrollVerticalScrollbar{
-
+  cursor: pointer;
 }
-
-.messages {
+.iScrollIndicator::hover{
+  width:400%!important;
+}
+#wrapper{
   position: relative;
+  height: 347px;
+  max-height: 347px;
+  overflow: hidden;
+  z-index: 1;
+}
+.messages {
+  height: auto;
+  z-index:1;
+  position: absolute;
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 347px;
-  overflow-y: hidden;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  width: 100%;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  -o-text-size-adjust: none;
+  text-size-adjust: none;
+
 }
 .messages .message {
   clear: both;

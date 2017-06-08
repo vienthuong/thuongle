@@ -1,5 +1,22 @@
 (function () {
     var Message;
+    var myScroll;
+    $( document ).ready(function() {
+      myScroll = new IScroll('#wrapper',{
+        scrollbars: true,
+        mouseWheel: true,
+        interactiveScrollbars: true,
+        shrinkScrollbars: 'scale',
+        fadeScrollbars: true,
+        useTransition:true,
+        bounce:true,
+        mouseWheelSpeed:10,
+        bounceEasing: {
+            style: 'cubic-bezier(0,0,1,1)',
+            fn: function (k) { return k; }
+        }
+      });
+    });
     Message = function (arg) {
         this.text = arg.text, this.message_side = arg.message_side;
         this.draw = function (_this) {
@@ -24,7 +41,6 @@
             return $message_input.val();
         };
         sendMessage = function (text) {
-            $('.messages').perfectScrollbar('update');
             var $messages, message;
             if (text.trim() === '') {
                 return;
@@ -37,6 +53,8 @@
                 message_side: message_side
             });
             message.draw();
+            myScroll.refresh();
+            myScroll.scrollTo(0, myScroll.maxScrollY, 0);
             return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
         };
         $('.send_message').click(function (e) {
