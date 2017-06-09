@@ -2,7 +2,7 @@ var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
 
-app.listen(6002, function() {
+app.listen(3000, function() {
   console.log('Server is running!');
 });
 
