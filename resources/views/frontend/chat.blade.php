@@ -1,6 +1,6 @@
 @extends('frontend.master')
 @section('main-content')
-<div class="chat_window">
+<div class="chat_window" id="chat_component">
   <div class="top_menu">
     <div class="buttons">
       <div class="button close">
@@ -14,19 +14,19 @@
       Chat
     </div>
   </div>
-  <div id="wrapper">
-  <ul class="messages">
-  </ul>
-  </div>
+    <chat-log :chat_log="chat_log"></chat-log>
   <div class="bottom_wrapper clearfix">
     <div class="message_input_wrapper">
-      <input class="message_input" placeholder="Type your message here..." />
-    </div><div class="send_message">
+      <input class="message_input" v-model="message_text" placeholder="Type your message here..." />
+    </div>
+    <div class="send_message">
     <div class="icon">
     </div>
-    <div class="text">
+    <a v-on:click="sendMessage">
+    <div class="text" style="display: block">
       Send
     </div>
+    </a>
   </div>
 </div>
 </div>
