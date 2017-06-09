@@ -1,1 +1,2 @@
- web: vendor/bin/heroku-php-apache2 publicweb: node socket.js
+ web: vendor/bin/heroku-php-apache2 public
+ web: node socket.js
