@@ -4,8 +4,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 const path = require('path');
 
-const PORT = 6001;
-// const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 
 const server = express()
@@ -16,7 +15,6 @@ const io = socketIO(server);
 
 io.on('connection', (socket) => {
   console.log('Client connected');
-  setInterval(() => io.emit('time', new Date().toTimeString()), 10000);
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
