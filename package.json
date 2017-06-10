@@ -18,7 +18,8 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
-    "socket.io": "^2.0.2"
+    "express": "4.15.3",
+    "socket.io": "2.0.2"
   },
   "name": "thuongle",
   "description": "<p align=\"center\"><img src=\"https://laravel.com/assets/img/components/logo-laravel.svg\"></p>",
