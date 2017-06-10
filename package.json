@@ -5,6 +5,7 @@
     "node": "6.9.4"
   },
   "scripts": {
+  	"postinstall": "bower install && gulp --production",
     "start": "node server.js",
     "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -13,6 +14,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+  	"gulp": "^3.8.8",
     "axios": "^0.15.3",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
@@ -23,7 +25,9 @@
   },
   "dependencies": {
     "express": "4.15.3",
-    "socket.io": "2.0.2"
+    "socket.io": "2.0.2",
+    "gulp": "^3.8.8",
+    "bower": "^1.5.2"
   },
   "name": "thuongle",
   "description": "<p align=\"center\"><img src=\"https://laravel.com/assets/img/components/logo-laravel.svg\"></p>",
