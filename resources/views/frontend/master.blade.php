@@ -18,7 +18,7 @@
 </head>
 <body>
   @yield('main-content')
-      <script type="text/javascript" src="socket.io/socket.io.js"></script>
+      <script type="text/javascript" src="socket.io.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/chat.js"></script>
