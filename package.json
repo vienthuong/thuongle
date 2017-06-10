@@ -1,5 +1,6 @@
 {
   "private": true,
+  "main": "server.js",
   "engines": {
     "node": "6.9.4"
   },
