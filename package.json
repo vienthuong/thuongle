@@ -19,5 +19,23 @@
   },
   "dependencies": {
     "socket.io": "^2.0.2"
-  }
+  },
+  "name": "thuongle",
+  "description": "<p align=\"center\"><img src=\"https://laravel.com/assets/img/components/logo-laravel.svg\"></p>",
+  "version": "1.0.0",
+  "main": "socket.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vienthuong/thuongle.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vienthuong/thuongle/issues"
+  },
+  "homepage": "https://github.com/vienthuong/thuongle#readme"
 }
