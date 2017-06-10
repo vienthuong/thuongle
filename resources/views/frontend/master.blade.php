@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="bower_assets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/chat.css">
     <link rel="stylesheet" type="text/css" href="css/app.css">
-    <script src="socket.io/socket.io.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="socket.io/socket.io.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
 
 
