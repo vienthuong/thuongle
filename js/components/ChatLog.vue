@@ -18,7 +18,7 @@
             console.log(this.chat_log);
         },
         mounted: function() {
-                    $('.message').addClass('appeared');
+            $('.message').addClass('appeared');
             console.log('Component mounted.')
         }
     }

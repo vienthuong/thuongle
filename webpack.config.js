@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: ['./js/socket-vue.js','./js/app.js'],
+  entry: ['./js/app.js'],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',

@@ -1,5 +1,5 @@
 import VueSocketio from 'vue-socket.io';
-Vue.use(VueSocketio, window.location.hostname);
+Vue.use(VueSocketio, window.location.hostname + ':3000');
 
 
 var vm = new Vue({
@@ -12,9 +12,9 @@ var vm = new Vue({
     }
   },
   methods: {
-    clickButton: function(val){
+    sendMessage: function(){
         // $socket is socket.io-client instance
-        this.$socket.emit('emit_method', val);
+        this.$socket.emit('emit_method', 'test');
     }
   }
 })

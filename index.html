@@ -28,7 +28,7 @@
     <chat-log :chat_log="chat_log"></chat-log>
     <div class="bottom_wrapper clearfix">
       <div class="message_input_wrapper">
-        <input class="message_input" v-model="message_text" placeholder="Type your message here..." />
+        <input class="message_input" v-model="message_text" v-on:keyup.13="sendMessage" placeholder="Type your message here..." />
       </div>
       <div class="send_message">
         <div class="icon">
@@ -54,7 +54,7 @@
     </li>
   </div>
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="/js/scripts.js"></script>
+  <!-- <script type="text/javascript" src="/js/scripts.js"></script> -->
   <script type="text/javascript" src="/dist/build.js"></script>
   <script type="text/javascript" src="/js/chat.js"></script>
 </body>

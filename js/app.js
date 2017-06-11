@@ -16,14 +16,22 @@ require('./bootstrap');
 /* Using these kinds of IScroll class for different cases. */
 
 import Vue from 'vue';
+import VueSocketio from 'vue-socket.io';
+
 Vue.component('chat-log', require('./components/ChatLog.vue'));
 Vue.component('message', require('./components/Message.vue'));
+Vue.use(VueSocketio, window.location.hostname + ':3000');
 
 const appChat = new Vue({
     el: '#chat_component',
     data: {
       message_text:'',
       message: 'Hello VUE',
+      sockets:{
+        connect: function(){
+          console.log('socket connected')
+        },
+      },
       chat_log:[
         {
           message_text : 'Hello Philip! :)',
@@ -56,11 +64,13 @@ const appChat = new Vue({
         if(this.message_text==''){
           return false;
         }
-          this.chat_log.push({
+        var message = {
           message_text: this.message_text,
           sender: 'You'
-        });
+        }
+          this.chat_log.push(message);
         this.message_text = '';
+        this.$socket.emit('emit_method', message);
       }
     }
 });
