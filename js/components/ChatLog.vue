@@ -17,7 +17,7 @@
         created: function () {
             console.log(this.chat_log);
         },
-        mounted() {
+        mounted: function() {
             console.log('Component mounted.')
         }
     }

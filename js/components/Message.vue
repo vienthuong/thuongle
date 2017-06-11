@@ -20,7 +20,7 @@
           $('.message').addClass('appeared');
           console.log( $('.message'));
         },
-        mounted() {
+        mounted:function() {
             console.log('Component mounted.')
         }
     }
