@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
   <ul class="messages">
-       <message v-for="mes in chat_log" :mes="mes"></message>
+       <message v-for="mes in chat_log" :key="mes.message_text" :mes="mes"></message>
   </ul>
   </div>
 </template>
@@ -9,7 +9,7 @@
     import message from './Message.vue'
 
     export default {
-        methods:{
+        methods: function(){
 
         },
         props:['chat_log'],

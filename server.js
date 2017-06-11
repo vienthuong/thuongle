@@ -1,8 +1,6 @@
 'use strict';
 
 const express = require('express');
-var app       =     express();
-app.use(express.static(__dirname+'/css'));
 
 const socketIO = require('socket.io');
 const path = require('path');
@@ -10,9 +8,17 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+const app = express();
+ app.use('/',express.static(__dirname)); 
+ app.get('/',function(req,res){ res.sendFile(INDEX); }) 
+ var server= app.listen(PORT,function(){ console.log("Listening on port: "+ PORT); })
+// const server = express()
+//   .use((req, res) => res.sendFile(INDEX) )
+//   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+// server.use(express.static('css'));
+// server.use(express.static('js'));
+// server.use(express.static('dist'));
+// server.use(express.static(path.join(__dirname, '/css')));
 
 const io = socketIO(server);
 
