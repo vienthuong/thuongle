@@ -1,5 +1,5 @@
 import VueSocketio from 'vue-socket.io';
-Vue.use(VueSocketio, window.location.hostname + ':3000');
+Vue.use(VueSocketio, window.location.hostname);
 
 
 var vm = new Vue({
