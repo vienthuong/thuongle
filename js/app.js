@@ -21,24 +21,6 @@ Vue.component('message', require('./components/Message.vue'));
 
 const appChat = new Vue({
     el: '#chat_component',
-    ready: function(){
-      console.log('????');
-      var myScroll;
-      myScroll = new IScroll('#wrapper',{
-        scrollbars: true,
-        mouseWheel: true,
-        interactiveScrollbars: true,
-        shrinkScrollbars: 'scale',
-        fadeScrollbars: true,
-        useTransition:true,
-        bounce:true,
-        mouseWheelSpeed:10,
-        bounceEasing: {
-            style: 'cubic-bezier(0,0,1,1)',
-            fn: function (k) { return k; }
-        }
-      });
-    },
     data: {
       message_text:'',
       message: 'Hello VUE',
@@ -58,7 +40,15 @@ const appChat = new Vue({
         {
           message_text : 'Thank so much Philip!',
           sender : 'You'
-        }
+        },
+        {
+          message_text : 'Bye Philip!',
+          sender : 'You'
+        },
+        {
+          message_text : 'Goodbye!',
+          sender : 'Me'
+        },
       ],
     },
     methods: {

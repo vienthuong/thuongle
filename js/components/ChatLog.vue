@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
   <ul class="messages">
-       <message v-for="mes in chat_log" :key="mes.message_text" :mes="mes"></message>
+       <message v-for="mes in chat_log" :key="mes.message_text" :mes="mes" :is_appeared="true"></message>
   </ul>
   </div>
 </template>
@@ -18,6 +18,7 @@
             console.log(this.chat_log);
         },
         mounted: function() {
+                    $('.message').addClass('appeared');
             console.log('Component mounted.')
         }
     }

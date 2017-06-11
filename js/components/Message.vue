@@ -1,6 +1,6 @@
 
 <template>
-  <li class="message appeared left">
+  <li class="message" v-bind:class="{left:mes.sender=='Me',right:mes.sender!='Me',appeared:is_appeared}" ref="newMes">
     <div class="avatar">
 
     </div>
@@ -15,13 +15,27 @@
 <script>
     export default {
         name:'message',
-        props: ['mes'],
+        data: function(){
+          return{
+            newMes:'',
+          }
+        },
+        props: ['mes','is_appeared'],
         created: function(){
-          $('.message').addClass('appeared');
-          console.log( $('.message'));
         },
         mounted:function() {
             console.log('Component mounted.')
         }
     }
 </script>
+<style scoped>
+  @keyframes fadeIn{
+    from{opacity: 0}
+    to{opacity: 1}
+  }
+  .message{
+    transition: 0.5s ease-in-out!important;
+    animation-name: fadeIn;
+    animation-duration:0.5s;
+  }
+</style>

@@ -14,6 +14,7 @@
             fn: function (k) { return k; }
         }
       });
+    myScroll.scrollTo(0, myScroll.maxScrollY, 0);
        $('.send_message').click(function (e) {
             myScroll.refresh();
             myScroll.scrollTo(0, myScroll.maxScrollY, 0);
