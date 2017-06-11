@@ -1,6 +1,9 @@
 'use strict';
 
 const express = require('express');
+var app       =     express();
+app.use(express.static(__dirname+'/css'));
+
 const socketIO = require('socket.io');
 const path = require('path');
 
