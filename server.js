@@ -5,12 +5,12 @@ const express = require('express');
 const socketIO = require('socket.io');
 const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const INDEX = path.join(__dirname, 'index.html');
 
 const app = express();
- app.use('/',express.static(__dirname)); 
- app.get('/',function(req,res){ res.sendFile(INDEX); }) 
+ app.use('/',express.static(__dirname));
+ app.get('/',function(req,res){ res.sendFile(INDEX); })
  var server= app.listen(PORT,function(){ console.log("Listening on port: "+ PORT); })
 // const server = express()
 //   .use((req, res) => res.sendFile(INDEX) )

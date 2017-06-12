@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
   <ul class="messages">
-       <message v-for="mes in chat_log" :key="mes.message_text" :mes="mes" :is_appeared="true"></message>
+       <message v-for="mes in chatlog" :key="mes.message_text" :mes="mes" :is_appeared="true"></message>
   </ul>
   </div>
 </template>
@@ -12,10 +12,10 @@
         methods: function(){
 
         },
-        props:['chat_log'],
-        name:'chat-log',
+        props:['chatlog'],
+        name:'chatlog',
         created: function () {
-            console.log(this.chat_log);
+            console.log(this.chatlog);
         },
         mounted: function() {
             $('.message').addClass('appeared');

@@ -17,22 +17,19 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
+import VueRouter from 'vue-router';
 
-Vue.component('chat-log', require('./components/ChatLog.vue'));
+// import chatbox from './components/ChatBox.vue';
+Vue.component('chatbox', require('./components/ChatBox.vue'));
+Vue.component('chatlog', require('./components/ChatLog.vue'));
 Vue.component('message', require('./components/Message.vue'));
-Vue.use(VueSocketio, window.location.hostname + ':3000');
+Vue.use(VueSocketio, window.location.hostname + ':3001');
+Vue.use(VueRouter);
 
 const appChat = new Vue({
-    el: '#chat_component',
+    el: '#app',
     data: {
-      message_text:'',
-      message: 'Hello VUE',
-      sockets:{
-        connect: function(){
-          console.log('socket connected')
-        },
-      },
-      chat_log:[
+      chatlog:[
         {
           message_text : 'Hello Philip! :)',
           sender : 'You'
@@ -60,17 +57,5 @@ const appChat = new Vue({
       ],
     },
     methods: {
-      sendMessage: function(){
-        if(this.message_text==''){
-          return false;
-        }
-        var message = {
-          message_text: this.message_text,
-          sender: 'You'
-        }
-          this.chat_log.push(message);
-        this.message_text = '';
-        this.$socket.emit('emit_method', message);
-      }
     }
 });
