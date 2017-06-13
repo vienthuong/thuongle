@@ -7,8 +7,10 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 const INDEX = path.join(__dirname, 'index.html');
+var history = require('connect-history-api-fallback');
 
 const app = express();
+app.use(history());
  app.use('/',express.static(__dirname));
  app.get('/',function(req,res){ res.sendFile(INDEX); })
  var server= app.listen(PORT,function(){ console.log("Listening on port: "+ PORT); })

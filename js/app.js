@@ -18,44 +18,34 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueSocketio from 'vue-socket.io';
 import VueRouter from 'vue-router';
+import chatbox from './components/ChatBox.vue';
+import chatlog from './components/ChatLog.vue';
+import Home from './components/Home.vue';
+import Page404 from './components/404.vue';
+import WTFYN from './components/WTFYN.vue';
 
-// import chatbox from './components/ChatBox.vue';
-Vue.component('chatbox', require('./components/ChatBox.vue'));
-Vue.component('chatlog', require('./components/ChatLog.vue'));
-Vue.component('message', require('./components/Message.vue'));
 Vue.use(VueSocketio, window.location.hostname + ':3001');
 Vue.use(VueRouter);
+Vue.component('chatlog',require('./components/ChatLog.vue'));
+Vue.component('message',require('./components/Message.vue'));
+
+const routes = [
+  { path: '/chatbox', component: chatbox},
+  { path: '/', component: Home },
+  { path: '/ask', component: WTFYN },
+  { path: '*', component: Page404 },
+];
+
+const router = new VueRouter({
+  routes,
+  mode: 'history'
+});
 
 const appChat = new Vue({
     el: '#app',
+    router,
     data: {
-      chatlog:[
-        {
-          message_text : 'Hello Philip! :)',
-          sender : 'You'
-        },
-        {
-          message_text : 'Hi, How are you',
-          sender : 'Me'
-        },
-        {
-          message_text : 'Im fine! Have a nice day!',
-          sender : 'Me'
-        },
-        {
-          message_text : 'Thank so much Philip!',
-          sender : 'You'
-        },
-        {
-          message_text : 'Bye Philip!',
-          sender : 'You'
-        },
-        {
-          message_text : 'Goodbye!',
-          sender : 'Me'
-        },
-      ],
     },
     methods: {
     }
-});
+}).$mount('#app');

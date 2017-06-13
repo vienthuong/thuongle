@@ -30,18 +30,6 @@
         </div>
       </div>
     </div>
-    <div class="message_template">
-      <li class="message">
-        <div class="avatar">
-
-        </div>
-        <div class="text_wrapper">
-          <div class="text">
-
-          </div>
-        </div>
-      </li>
-    </div>
   </div>
 </template>
 <script>
@@ -56,6 +44,32 @@
             console.log('socket connected')
           },
         },
+        chatlog : [
+        {
+          message_text : 'Hello Philip! :)',
+          sender : 'You'
+        },
+        {
+          message_text : 'Hi, How are you',
+          sender : 'Me'
+        },
+        {
+          message_text : 'Im fine! Have a nice day!',
+          sender : 'Me'
+        },
+        {
+          message_text : 'Thank so much Philip!',
+          sender : 'You'
+        },
+        {
+          message_text : 'Bye Philip!',
+          sender : 'You'
+        },
+        {
+          message_text : 'Goodbye!',
+          sender : 'Me'
+        },
+        ]
       }
     },
     methods: {
@@ -73,7 +87,6 @@
       }
     },
     name:'chatbox',
-    props:['chatlog'],
     created: function () {
       console.log(this.chat_box);
     },
