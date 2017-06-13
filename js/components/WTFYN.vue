@@ -12,7 +12,9 @@
           </div>
         </div>
         <div class="pull-right" style="margin-right:20px">
-          <div class="fb-share-button" v-bind:href="sharePage" data-layout="button_count" data-size="small" data-mobile-iframe="true"></div>
+          <div class="fb-share-button" v-bind:data-href="sharePage" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore" target="_blank" v-bind:href="sharePage">Share</a>
+          </div>
         </div>
         <div v-html="response_text" class="title">
         </div>
@@ -80,6 +82,7 @@
             vm.response_img = '<img class="meme-img img-responsive" src="' + response.data.image + '" alt="">';
             if(force != false){ vm.force = false};
             vm.sharePage = 'http://' + window.location.hostname + '/?q=' + vm.question + '&a=' + response.data.answer; 
+            console.log(vm.sharePage);
           })
           .catch(function (error) {
             vm.response_text = 'Server tạch rồi các bạn eii ' + error
