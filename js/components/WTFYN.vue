@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div id="fb-root"></div>
     <div class="chat_window home">
       <div class="top_menu">
         <div class="buttons">
@@ -10,23 +11,25 @@
           <div class="button maximize">
           </div>
         </div>
-        <div class="title">
-          {{ response_text }}
+        <div class="pull-right" style="margin-right:20px">
+          <div class="fb-share-button" v-bind:href="sharePage" data-layout="button_count" data-size="small" data-mobile-iframe="true"></div>
+        </div>
+        <div v-html="response_text" class="title">
         </div>
       </div>
-      <img v-bind:src="imageLink" alt="">
+      <div class="img-wrapper">
+        <div class="imgMeme" v-html="response_img">
+        </div>
+        <!-- <img class="meme-img img-responsive" src="/img/default.jpg" alt=""> -->
+      </div>
       <div class="bottom_wrapper clearfix">
         <div class="message_input_wrapper">
-          <input class="message_input" v-model="question" v-on:keyup.13="sendQuestion" placeholder="Ask anything" />
+          <input class="message_input" v-model="question" v-on:keyup.13="getAnswer" placeholder="Hỏi gì hỏi lẹ..." />
         </div>
-        <div class="send_message">
+        <div class="send_message" style="display:none">
           <div class="icon">
+            <span class="text">Share</span>
           </div>
-          <a v-on:click="sendQuestion">
-            <span class="text" style="display: block">
-              Let's see
-            </span>
-          </a>
         </div>
       </div>
     </div>
@@ -38,60 +41,89 @@
   import lodash from 'lodash';
   export default {
     name:'WTFYN',
+    created:function(){            
+      if(this.$route.query.q!=null){
+        this.question = this.$route.query.q;
+        this.force = this.$route.query.a;
+        this.getAnswer();
+      };
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1886558448255498";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    },
     data: function(){
       return {
-        imageLink: 'https://cdn.meme.am/cache/instances/folder979/500x/63443979/ron-burgundy-go-ahead-ask-me-anything.jpg',
+        force: false,
+        sharePage: 'http://' + window.location.hostname + this.$route.fullPath,
+        response_img: '<img class="meme-img img-responsive" src="/img/default.jpg" alt="">',
         question: '',
-        response_text: 'Ask me now',
+        response_text: 'Hỏi gì đi?',
       }
     },
     methods:{
-      sendQuestion:function(){
-        console.log(this.nickName);
-      },
-      getAnswer: _.debounce(
+      getAnswer: _.debounce(  
         function () {
           if (this.question.indexOf('?') === -1) {
-            this.response_text = 'Questions usually contain a question mark. ;-)'
+            this.response_text = 'Hỏi thì thêm chấm hỏi ?'
             return
           }
-          this.response_text = 'Thinking...'
+          this.response_text = 'Đễ nghĩ đã...'
           var vm = this
-          axios.get('https://yesno.wtf/api')
+          var force = vm.force;
+          axios.get('https://yesno.wtf/api?force=' + force)
           .then(function (response) {
-            vm.response_text = _.capitalize(response.data.answer);
-            vm.imageLink = response.data.image;
+            vm.response_text = '<span style="font-weight:bold;color:blue">' + _.capitalize(response.data.answer) + '</span>';
+            vm.response_img = '<img class="meme-img img-responsive" src="' + response.data.image + '" alt="">';
+            if(force != false){ vm.force = false};
+            vm.sharePage = 'http://' + window.location.hostname + '/?q=' + vm.question + '&a=' + response.data.answer; 
           })
           .catch(function (error) {
-            vm.response_text = 'Error! Could not reach the API. ' + error
+            vm.response_text = 'Server tạch rồi các bạn eii ' + error
           })
         },
-      // This is the number of milliseconds we wait for the
-      // user to stop typing.
-      500
-      )
+        500
+        )
     },
     watch: {
-          // whenever question changes, this function will run
-          question: function (newQuestion) {
-            this.response_text = 'Waiting for you to stop typing...';
-            this.getAnswer();
-          }
-        },
-        mounted() {
-          console.log('Component mounted.')
-        }
+      question: function () {
+        this.response_text = '...';
+        this.getAnswer();
       }
-    </script>
-    <style scoped>
-      .home{
-        height:auto;
-        width:auto;
-      }
-      .home .bottom_wrapper{
-        position: static;
-      }
-      .bottom_wrapper .send_message{
-
-      }
-    </style>
+    },
+    mounted() {
+    }
+  }
+</script>
+<style scoped>
+  .home{
+    height:auto;
+  }
+  .home .bottom_wrapper{
+    position: static;
+  }
+  .bottom_wrapper .send_message{
+    background: #48629C;
+    border-color:#3E5384;
+  }
+  .home .message_input_wrapper{
+    width:100%;
+  }
+  .img-wrapper{
+    min-height: 300px;
+    text-align: center;
+  }
+  .img-wrapper:before {
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    min-height: 300px;
+  }
+  .imgMeme{
+    display: inline-block;
+    vertical-align: middle;
+  }
+</style>

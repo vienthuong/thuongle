@@ -23,6 +23,7 @@ import chatlog from './components/ChatLog.vue';
 import Home from './components/Home.vue';
 import Page404 from './components/404.vue';
 import WTFYN from './components/WTFYN.vue';
+import Test from './components/Test.vue';
 
 Vue.use(VueSocketio, window.location.hostname + ':3001');
 Vue.use(VueRouter);
@@ -34,6 +35,7 @@ const routes = [
   { path: '/', component: Home },
   { path: '/ask', component: WTFYN },
   { path: '*', component: Page404 },
+  { path: '/test', component: Test },
 ];
 
 const router = new VueRouter({
