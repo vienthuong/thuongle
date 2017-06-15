@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
     <div class="chat_window home">
       <div class="top_menu">
         <div class="buttons">
@@ -15,45 +15,70 @@
         </div>
       </div>
       <div class="bottom_wrapper clearfix">
-        <div class="message_input_wrapper">
-          <input class="message_input" v-model="nickName" v-on:keyup.13="setNickname" placeholder="Enter your Nick name here..." />
+        <div class="message_input_wrapper" :class="{error: validation.hasError('nickName')}">
+          <input class="message_input" name="username" v-model="nickName" v-on:keyup.13="setGuest" placeholder="Enter your Nick name here..." />
+          <div class="message">{{ validation.firstError('nickName') }}</div>
         </div>
         <div class="send_message">
           <div class="icon">
           </div>
-          <a v-on:click="setNickname">
+          <a v-on:click="setGuest">
             <span class="text" style="display: block">
               Next
             </span>
           </a>
         </div>
-              </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-    export default {
-        data: function(){
-            return {
-                nickName: '',
-            }
-        },
-        methods:{
-            setNickname:function(){
-                console.log(this.nickName);
-            }
-        },
-        mounted() {
-            console.log('Component mounted.')
-        }
+  export default {
+    data: function(){
+      return {
+        nickName: '',
+      }
+    },
+    props:['validator'],
+    validators: {
+      nickName: function (value) {
+        return this.validator.value(value).required('Your nickname please').minLength(4).maxLength(10);
+      }
+    },
+    methods:{
+      setGuest:function(){
+        var vm = this;
+        vm.$validate()
+        .then(function (success) {
+          localStorage.setItem('authenticase',false);
+          localStorage.setItem('username',vm.nickName);
+          vm.$router.push('/chatbox');
+        });
+      }
+    },
+    mounted() {
+      console.log('Component mounted.')
     }
+  }
 </script>
 <style scoped>
-    .home{
-        height:auto;
-    }
-    .home .bottom_wrapper{
-        position: static;
-    }
+  .home{
+    height:auto;
+  }
+  .home .bottom_wrapper{
+    position: static;
+  }
+  .bottom_wrapper .message_input_wrapper{
+    transition: 0.3s ease-in-out;
+    position: relative;
+  }
+  .bottom_wrapper .message_input_wrapper .message{
+    position: absolute;
+    top:-30px;
+    color:red;
+  }
+  .bottom_wrapper .message_input_wrapper.error{
+    border-color:red!important;
+  }
 </style>

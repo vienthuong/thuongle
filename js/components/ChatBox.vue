@@ -14,7 +14,7 @@
           Chat
         </div>
       </div>
-      <chatlog :chatlog="chatlog"></chatlog>
+      <chatlog :chatlog="chatlog" :sender="sender"></chatlog>
       <div class="bottom_wrapper clearfix">
         <div class="message_input_wrapper">
           <input class="message_input" v-model="message_text" v-on:keyup.13="sendMessage" placeholder="Type your message here..." />
@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-  import chatlog from './ChatLog.vue'
+  import chatlog from './ChatLog.vue';
 
   export default {
     data: function(){
@@ -44,6 +44,7 @@
             console.log('socket connected')
           },
         },
+        sender:localStorage.getItem('username'),
         chatlog : [
         {
           message_text : 'Hello Philip! :)',
@@ -72,18 +73,23 @@
         ]
       }
     },
+    components:{
+          chatlog
+        },
     methods: {
       sendMessage: function(){
         if(this.message_text==''){
           return false;
         }
+        console.log(this.sender);
         var message = {
           message_text: this.message_text,
-          sender: 'You'
+          sender: this.sender
         }
+        this.$socket.emit('emit_method', message);
+        message.sender = 'Me';
         this.chatlog.push(message);
         this.message_text = '';
-        this.$socket.emit('emit_method', message);
       }
     },
     name:'chatbox',

@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper">
   <ul class="messages">
-       <message v-for="mes in chatlog" :key="mes.message_text" :mes="mes" :is_appeared="true"></message>
+       <message v-for="mes in chatlog" :key="mes.message_text" :mes="mes" :is_appeared="true" :sender="sender"></message>
   </ul>
   </div>
 </template>
@@ -12,7 +12,10 @@
         methods: function(){
 
         },
-        props:['chatlog'],
+        components:{
+          message
+        },
+        props:['chatlog','sender'],
         name:'chatlog',
         created: function () {
             console.log(this.chatlog);

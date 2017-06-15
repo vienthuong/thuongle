@@ -1,7 +1,7 @@
 
 <template>
   <li class="message" v-bind:class="{left:mes.sender=='Me',right:mes.sender!='Me',appeared:is_appeared}" ref="newMes">
-    <div class="avatar">
+    <div v-bind:title="mes.sender" class="avatar">
 
     </div>
     <div class="text_wrapper">
@@ -20,7 +20,7 @@
             newMes:'',
           }
         },
-        props: ['mes','is_appeared'],
+        props: ['mes','is_appeared','sender'],
         created: function(){
         },
         mounted:function() {
