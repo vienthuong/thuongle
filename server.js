@@ -25,11 +25,24 @@ app.use(history());
 const io = socketIO(server);
 
 io.on('connection', (socket) => {
-  console.log('Client connected');
-  socket.on('emit_method', function(data){
-  	console.log(data);
+
+  socket.on('joinRoom', function (joinRoom) {
+    socket.join('chatRoom'); // We are using room of socket io
+    console.log('a client has joined chat Room ');
   });
-  socket.on('disconnect', () => console.log('Client disconnected'));
+
+  socket.on('message_sent', function(data){
+      socket.to('chatRoom').emit('message_received', data);
+      console.log(data);
+  });
+
+  socket.on('leave', function(leaveRoom){
+    console.log('a client has left room ' + leaveRoom);
+    socket.leave(leaveRoom);
+  });
+
+  socket.on('disconnect', function(socket){
+    console.log('a client has disconnected')
+  });
 });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);

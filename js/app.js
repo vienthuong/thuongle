@@ -41,19 +41,25 @@
 
 
  const routes = [
- { name:chatbox,path: '/chatbox', component: chatbox},
- { path: '/', component: Home, props:{validator:Validator} },
- { path: '/ask', component: WTFYN },
- { path: '*', component: Page404 },
- { path: '/test', component: Test },
- ];
+ { name:chatbox,path: '/chatbox', component: chatbox,  beforeEnter: (to, from, next) => {
+   if(localStorage.getItem('username') === null){
+    next('/');
+  }else{
+    next();
+  }
+}},
+{ path: '/', component: Home, props:{validator:Validator} },
+{ path: '/ask', component: WTFYN },
+{ path: '*', component: Page404 },
+{ path: '/test', component: Test },
+];
 
- export const router = new VueRouter({
+export const router = new VueRouter({
   routes,
   mode: 'history'
 });
 
- const appChat = new Vue({
+const appChat = new Vue({
   el: '#app',
   router,
   data: {

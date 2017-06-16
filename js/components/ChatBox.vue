@@ -36,14 +36,29 @@
   import chatlog from './ChatLog.vue';
 
   export default {
+    sockets:{
+          connect: function(){
+            this.$socket.emit('joinRoom', 'a client has joined chat room');
+          },
+          message_received: function(message){
+            this.chatlog.push(message);
+            // this.$set(this.chatlog, 3, 2);
+            $('.messages ul').scrollTop(999999999);
+            console.log(this.chatlog);
+          },
+          disconnect: function(){
+            this.$socket.emit('leaveRoom', 'a client has left chat room');
+          },
+        },
+    watch: {
+      chatlog: function () {
+        // this.response_text = '...';
+        // this.getAnswer();
+      }
+    },
     data: function(){
       return {
         message_text:'',
-        sockets:{
-          connect: function(){
-            console.log('socket connected')
-          },
-        },
         sender:localStorage.getItem('username'),
         chatlog : [
         {
@@ -81,12 +96,11 @@
         if(this.message_text==''){
           return false;
         }
-        console.log(this.sender);
         var message = {
           message_text: this.message_text,
           sender: this.sender
         }
-        this.$socket.emit('emit_method', message);
+        this.$socket.emit('message_sent', message);
         message.sender = 'Me';
         this.chatlog.push(message);
         this.message_text = '';
@@ -94,10 +108,8 @@
     },
     name:'chatbox',
     created: function () {
-      console.log(this.chat_box);
     },
     mounted: function() {
-      console.log('Component mounted.')
     }
   }
 </script>

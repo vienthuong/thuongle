@@ -18,11 +18,10 @@
         props:['chatlog','sender'],
         name:'chatlog',
         created: function () {
-            console.log(this.chatlog);
+            // console.log(this.chatlog);
         },
         mounted: function() {
             $('.message').addClass('appeared');
-            console.log('Component mounted.')
         }
     }
 </script>

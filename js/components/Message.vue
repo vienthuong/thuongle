@@ -24,7 +24,6 @@
         created: function(){
         },
         mounted:function() {
-            console.log('Component mounted.')
         }
     }
 </script>

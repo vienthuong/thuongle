@@ -42,8 +42,8 @@
     },
     props:['validator'],
     validators: {
-      nickName: function (value) {
-        return this.validator.value(value).required('Your nickname please').minLength(4).maxLength(10);
+      nickName(value) {
+        return this.validator.value(value).required('Your nickname please!').minLength(4).maxLength(10);
       }
     },
     methods:{
@@ -51,14 +51,15 @@
         var vm = this;
         vm.$validate()
         .then(function (success) {
+          if(success){
           localStorage.setItem('authenticase',false);
           localStorage.setItem('username',vm.nickName);
           vm.$router.push('/chatbox');
+          }
         });
       }
     },
     mounted() {
-      console.log('Component mounted.')
     }
   }
 </script>
@@ -72,6 +73,7 @@
   .bottom_wrapper .message_input_wrapper{
     transition: 0.3s ease-in-out;
     position: relative;
+    height:51px;
   }
   .bottom_wrapper .message_input_wrapper .message{
     position: absolute;
