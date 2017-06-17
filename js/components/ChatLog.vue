@@ -18,7 +18,7 @@
         props:['chatlog','sender'],
         name:'chatlog',
         created: function () {
-            // console.log(this.chatlog);
+
         },
         mounted: function() {
             $('.message').addClass('appeared');

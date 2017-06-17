@@ -14,7 +14,7 @@
           Chat
         </div>
       </div>
-      <chatlog :chatlog="chatlog" :sender="sender"></chatlog>
+      <chatlog :chatlog="chatlog" :sender="sender" :myScroll="myScroll"></chatlog>
       <div class="bottom_wrapper clearfix">
         <div class="message_input_wrapper">
           <input class="message_input" v-model="message_text" v-on:keyup.13="sendMessage" placeholder="Type your message here..." />
@@ -37,27 +37,27 @@
 
   export default {
     sockets:{
-          connect: function(){
-            this.$socket.emit('joinRoom', 'a client has joined chat room');
-          },
-          message_received: function(message){
-            this.chatlog.push(message);
-            // this.$set(this.chatlog, 3, 2);
-            $('.messages ul').scrollTop(999999999);
-            console.log(this.chatlog);
-          },
-          disconnect: function(){
-            this.$socket.emit('leaveRoom', 'a client has left chat room');
-          },
-        },
-    watch: {
-      chatlog: function () {
-        // this.response_text = '...';
-        // this.getAnswer();
-      }
+      connect(){
+        this.$socket.emit('joinRoom', 'a client has joined chat room');
+      },
+      message_received(message){
+        this.chatlog.push(message);
+        this.updateScroll();
+      },
+      disconnect(){
+        this.$socket.emit('leaveRoom', 'a client has left chat room');
+      },
     },
-    data: function(){
+        watch: {
+      //     chatlog() {
+      //     console.log(this.chatlog.length);
+      //     this.myScroll.refresh();
+      //     this.myScroll.scrollTo(0, this.myScroll.maxScrollY, 0);
+      // }
+    },
+    data(){
       return {
+        myScroll:{},
         message_text:'',
         sender:localStorage.getItem('username'),
         chatlog : [
@@ -89,10 +89,10 @@
       }
     },
     components:{
-          chatlog
-        },
+      chatlog
+    },
     methods: {
-      sendMessage: function(){
+      sendMessage(){
         if(this.message_text==''){
           return false;
         }
@@ -103,13 +103,44 @@
         this.$socket.emit('message_sent', message);
         message.sender = 'Me';
         this.chatlog.push(message);
+        this.updateScroll();
         this.message_text = '';
+      },
+      updateScroll(){
+        setTimeout(()=>{ 
+         this.myScroll.refresh();
+         this.myScroll.scrollTo(0, this.myScroll.maxScrollY, 0);
+       }, 0);
       }
     },
-    name:'chatbox',
-    created: function () {
+    updated(){
+      // console.log('123213');
     },
-    mounted: function() {
-    }
-  }
+    name:'chatbox',
+    created() {
+
+    },
+    mounted() {
+     this.myScroll = new IScroll('#wrapper',{
+      scrollbars: true,
+      mouseWheel: true,
+      interactiveScrollbars: true,
+      shrinkScrollbars: 'scale',
+      fadeScrollbars: true,
+      useTransition:true,
+      bounce:true,
+      mouseWheelSpeed:10,
+      bounceEasing: {
+        style: 'cubic-bezier(0,0,1,1)',
+        fn: function (k) { return k; }
+      }
+    });
+     this.myScroll.scrollTo(0, this.myScroll.maxScrollY, 0);
+   }
+ }
 </script>
+<style scoped>
+  .bottom_wrapper{
+    z-index: 9999;
+  }
+</style>

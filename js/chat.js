@@ -1,30 +1,32 @@
-    // var Message;
-    var myScroll;
-      myScroll = new IScroll('#wrapper',{
-        scrollbars: true,
-        mouseWheel: true,
-        interactiveScrollbars: true,
-        shrinkScrollbars: 'scale',
-        fadeScrollbars: true,
-        useTransition:true,
-        bounce:true,
-        mouseWheelSpeed:10,
-        bounceEasing: {
-            style: 'cubic-bezier(0,0,1,1)',
-            fn: function (k) { return k; }
-        }
-      });
-    myScroll.scrollTo(0, myScroll.maxScrollY, 0);
-       $('.send_message').click(function (e) {
-            myScroll.refresh();
-            myScroll.scrollTo(0, myScroll.maxScrollY, 0);
-        });
-        $('.message_input').keyup(function (e) {
-            if (e.which === 13) {
-                myScroll.refresh();
-                myScroll.scrollTo(0, myScroll.maxScrollY, 0);
-            }
-        });
+    // // var Message;
+    // var myScroll;
+    //   myScroll = new IScroll('#wrapper',{
+    //     scrollbars: true,
+    //     mouseWheel: true,
+    //     interactiveScrollbars: true,
+    //     shrinkScrollbars: 'scale',
+    //     fadeScrollbars: true,
+    //     useTransition:true,
+    //     bounce:true,
+    //     mouseWheelSpeed:10,
+    //     bounceEasing: {
+    //         style: 'cubic-bezier(0,0,1,1)',
+    //         fn: function (k) { return k; }
+    //     }
+    //   });
+    // myScroll.scrollTo(0, myScroll.maxScrollY, 0);
+    //    $('.send_message').click(function (e) {
+    //         myScroll.refresh();
+    //         myScroll.scrollTo(0, myScroll.maxScrollY, 0);
+    //     });
+    //     $('.message_input').keyup(function (e) {
+    //         if (e.which === 13) {
+    //             myScroll.refresh();
+    //             myScroll.scrollTo(0, myScroll.maxScrollY, 0);
+    //         }
+    //     });
+    
+
 //     Message = function (arg) {
 //         this.text = arg.text, this.message_side = arg.message_side;
 //         this.draw = function (_this) {

@@ -25,7 +25,7 @@
  import Test from './components/Test.vue';
  import SimpleVueValidation from 'simple-vue-validator';
 
- Vue.use(VueSocketio, window.location.hostname + ':3001');
+ Vue.use(VueSocketio, window.location.hostname );
  Vue.use(VueRouter);
  Vue.use(SimpleVueValidation);
 
