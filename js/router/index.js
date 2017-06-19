@@ -29,9 +29,9 @@ const routes = [
    if(localStorage.getItem('user') === null){
     next('/');
   }else{
-    Vue.use(VueSocketio, window.location.hostname + ':3001' );
+    // Vue.use(VueSocketio, window.location.hostname + ':3001' );
     // For Heroku Env
-    // Vue.use(VueSocketio, window.location.hostname );
+    Vue.use(VueSocketio, window.location.hostname );
     next();
   }
   }},
