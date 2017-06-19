@@ -17,52 +17,19 @@
 
  import Vue from 'vue';
  import VueSocketio from 'vue-socket.io';
- import VueRouter from 'vue-router';
- import chatbox from './components/ChatBox.vue';
- import Home from './components/Home.vue';
- import Page404 from './components/404.vue';
- import WTFYN from './components/WTFYN.vue';
- import Test from './components/Test.vue';
- import SimpleVueValidation from 'simple-vue-validator';
+ import { createRouter } from './router';
 
- Vue.use(VueSocketio, window.location.hostname );
- Vue.use(VueRouter);
- Vue.use(SimpleVueValidation);
-
- var Validator = SimpleVueValidation.Validator.create(
- {
-  templates: {
-    url: 'That doesn\'t look like a valid url.',
-    minLength: 'Your name seems too short',
-    maxLength: 'Wow this is a loooong ass name',
-  }
-}
-);
+ Vue.use(VueSocketio, window.location.hostname + ':3001' );
 
 
- const routes = [
- { name:chatbox,path: '/chatbox', component: chatbox,  beforeEnter: (to, from, next) => {
-   if(localStorage.getItem('username') === null){
-    next('/');
-  }else{
-    next();
-  }
-}},
-{ path: '/', component: Home, props:{validator:Validator} },
-{ path: '/ask', component: WTFYN },
-{ path: '*', component: Page404 },
-{ path: '/test', component: Test },
-];
 
-export const router = new VueRouter({
-  routes,
-  mode: 'history'
-});
+const router = createRouter();
 
 const appChat = new Vue({
   el: '#app',
   router,
   data: {
+
   },
   methods: {
   }

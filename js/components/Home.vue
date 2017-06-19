@@ -53,7 +53,11 @@
         .then(function (success) {
           if(success){
           localStorage.setItem('authenticase',false);
-          localStorage.setItem('username',vm.nickName);
+          var user = {
+            username:vm.nickName,
+            bgColor:'#ffe6cb'
+          }
+          localStorage.setItem('user',user);
           vm.$router.push('/chatbox');
           }
         });

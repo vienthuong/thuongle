@@ -10,6 +10,10 @@
           <div class="button maximize">
           </div>
         </div>
+        <div class="pull-right">
+          <a v-on:click="showCompact"><span class="bgColor" v-bind:style="{backgroundColor:bgColor.hex}"></span></a>
+          <compact-picker v-if="showColorCompact==true" class="compactcolor" v-model="bgColor" />
+        </div>
         <div class="title">
           Chat
         </div>
@@ -34,7 +38,14 @@
 </template>
 <script>
   import chatlog from './ChatLog.vue';
+  import { Compact } from 'vue-color'
 
+  const defaultMe = {
+    hex:'#ffe6cb',
+  };
+  const defaultYou = {
+    hex:'#c7eafc',
+  };
   export default {
     sockets:{
       connect(){
@@ -48,57 +59,62 @@
         this.$socket.emit('leaveRoom', 'a client has left chat room');
       },
     },
-        watch: {
-      //     chatlog() {
-      //     console.log(this.chatlog.length);
-      //     this.myScroll.refresh();
-      //     this.myScroll.scrollTo(0, this.myScroll.maxScrollY, 0);
-      // }
+    watch: {
+      bgColor(){
+        this.showCompact();
+      }
     },
     data(){
       return {
+        showColorCompact:false,
+        bgColor: defaultMe,
         myScroll:{},
         message_text:'',
-        sender:localStorage.getItem('username'),
+        sender:localStorage.getItem('user').username,
         chatlog : [
         {
           message_text : 'Hello Philip! :)',
-          sender : 'You'
+          sender : 'You',
         },
         {
           message_text : 'Hi, How are you',
-          sender : 'Me'
+          sender : 'Me',
         },
         {
           message_text : 'Im fine! Have a nice day!',
-          sender : 'Me'
+          sender : 'Me',
         },
         {
           message_text : 'Thank so much Philip!',
-          sender : 'You'
+          sender : 'You',
         },
         {
           message_text : 'Bye Philip!',
-          sender : 'You'
+          sender : 'You',
         },
         {
           message_text : 'Goodbye!',
-          sender : 'Me'
+          sender : 'Me',
         },
         ]
       }
     },
     components:{
+          'compact-picker': Compact,
       chatlog
     },
     methods: {
+      showCompact(){
+        this.showColorCompact=!this.showColorCompact;
+      },
       sendMessage(){
         if(this.message_text==''){
           return false;
         }
         var message = {
           message_text: this.message_text,
-          sender: this.sender
+          sender: this.sender,
+          bgColor:this.bgColor.hex
         }
         this.$socket.emit('message_sent', message);
         message.sender = 'Me';
@@ -107,7 +123,7 @@
         this.message_text = '';
       },
       updateScroll(){
-        setTimeout(()=>{ 
+        setTimeout(()=>{
          this.myScroll.refresh();
          this.myScroll.scrollTo(0, this.myScroll.maxScrollY, 0);
        }, 0);
@@ -140,7 +156,33 @@
  }
 </script>
 <style scoped>
+.chat_window{
+  border:1px solid rgba(0,0,0,0.2);
+}
+.send_message{
+  border:1px solid rgba(0,0,0,0.2);
+}
+.top_menu{
+  border-bottom:1px solid rgba(0,0,0,0.2);
+}
   .bottom_wrapper{
+    border-top:1px solid rgba(0,0,0,0.2);
     z-index: 9999;
+  }
+  .compactcolor{
+    position: absolute;
+    z-index: 9999;
+    right:0px;
+  }
+  .vue-color__compact{
+    padding-left: 0px!important;
+  }
+  .bgColor{
+    margin-right: 20px;
+    display: block;
+    height:25px;
+    width:25px;
+    border:1px solid rgba(0,0,0,0.2);
+    border-radius:50%;
   }
 </style>

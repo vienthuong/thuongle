@@ -4,10 +4,11 @@
     <div v-bind:title="mes.sender" class="avatar">
 
     </div>
-    <div class="text_wrapper">
+    <div class="text_wrapper" v-bind:style="{color:mes.bgColor}">
       <div class="text">
         {{mes.message_text}}
       </div>
+      <span class="sender" v-if="mes.sender!='Me'">{{mes.sender}}</span>
     </div>
   </li>
 </template>
@@ -32,9 +33,19 @@
     from{opacity: 0}
     to{opacity: 1}
   }
+  .text_wrapper{
+    background-color: currentColor;
+  }
   .message{
     transition: 0.5s ease-in-out!important;
     animation-name: fadeIn;
     animation-duration:0.5s;
+  }
+  .sender{
+    position: absolute;
+    bottom:3px;
+    right:10px;
+    opacity: 0.7;
+    font-size:13px;
   }
 </style>
