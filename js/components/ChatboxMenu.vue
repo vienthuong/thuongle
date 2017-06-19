@@ -1,6 +1,6 @@
 <template>
 	<div class="fixed-plugin">
-		<div class="dropdown show-dropdown" v-bind:class="{open:showMenu}">
+		<div class="dropdown show-dropdown" v-bind:class="{open:showMenu}" >
 			<a data-toggle="dropdown" v-on:click="toggleMenu">
 				<i class="fa fa-cog fa-2x"></i>
 			</a>
@@ -197,7 +197,12 @@
 		text-align: center;
 		text-transform: uppercase;
 	}
-
+	.show-dropdown a{
+		display: block;
+	}
+	.show-dropdown:hover{
+		cursor: pointer;
+	}
 	.fixed-plugin .adjustments-line p{
 		float: left;
 		display: inline-block;
