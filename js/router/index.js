@@ -5,6 +5,8 @@ import Home from '../components/Home.vue';
 import Page404 from '../components/404.vue';
 import WTFYN from '../components/WTFYN.vue';
 import Test from '../components/Test.vue';
+ import VueSocketio from 'vue-socket.io';
+
 
 
 import SimpleVueValidation from 'simple-vue-validator';
@@ -24,9 +26,12 @@ var nickNameValidator = SimpleVueValidation.Validator.create(
 
 const routes = [
   { name:chatbox,path: '/chatbox', component: chatbox,  beforeEnter: (to, from, next) => {
-   if(localStorage.getItem('username') === null){
+   if(localStorage.getItem('user') === null){
     next('/');
   }else{
+    // Vue.use(VueSocketio, window.location.hostname + ':3001' );
+    // For Heroku Env
+    Vue.use(VueSocketio, window.location.hostname );
     next();
   }
   }},

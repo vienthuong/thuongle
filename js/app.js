@@ -16,10 +16,8 @@
  /* Using these kinds of IScroll class for different cases. */
 
  import Vue from 'vue';
- import VueSocketio from 'vue-socket.io';
  import { createRouter } from './router';
 
- Vue.use(VueSocketio, window.location.hostname + ':3001' );
 
 
 

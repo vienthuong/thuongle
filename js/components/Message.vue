@@ -1,14 +1,14 @@
 
 <template>
-  <li class="message" v-bind:class="{left:mes.sender=='Me',right:mes.sender!='Me',appeared:is_appeared}" ref="newMes">
-    <div v-bind:title="mes.sender" class="avatar">
+  <li class="message" v-bind:class="{left:mes.user.username==me,right:mes.user.username!=me,appeared:is_appeared}" ref="newMes">
+    <div v-bind:title="mes.user.username" class="avatar">
 
     </div>
-    <div class="text_wrapper" v-bind:style="{color:mes.bgColor}">
-      <div class="text">
+    <div class="text_wrapper" v-bind:style="{color:mes.user.bgColor.hex}">
+      <div class="text" v-bind:style="{color:mes.user.txtColor.hex}">
         {{mes.message_text}}
       </div>
-      <span class="sender" v-if="mes.sender!='Me'">{{mes.sender}}</span>
+      <span class="sender" v-if="mes.user.username!=me" v-bind:style="{color:mes.user.txtColor.hex}">{{mes.user.username}}</span>
     </div>
   </li>
 </template>
@@ -19,9 +19,10 @@
         data: function(){
           return{
             newMes:'',
+            me:JSON.parse(localStorage.getItem('user')).username
           }
         },
-        props: ['mes','is_appeared','sender'],
+        props: ['mes','is_appeared'],
         created: function(){
         },
         mounted:function() {

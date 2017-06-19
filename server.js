@@ -28,6 +28,10 @@ io.on('connection', (socket) => {
 
   socket.on('joinRoom', function (joinRoom) {
     socket.join('chatRoom'); // We are using room of socket io
+    io.in('chatRoom').clients(function(error, clients){
+        if (error) throw error;
+        io.to('chatRoom').emit('usersInRoom', clients.length);
+      });
     console.log('a client has joined chat Room ');
   });
 
@@ -38,11 +42,21 @@ io.on('connection', (socket) => {
 
   socket.on('leave', function(leaveRoom){
     console.log('a client has left room ' + leaveRoom);
+   
     socket.leave(leaveRoom);
+     io.in('chatRoom').clients(function(error, clients){
+        if (error) throw error;
+        io.to('chatRoom').emit('usersInRoom', clients.length);
+      });
+
   });
 
   socket.on('disconnect', function(socket){
-    console.log('a client has disconnected')
+    console.log('a client has disconnected');
+     io.in('chatRoom').clients(function(error, clients){
+        if (error) throw error;
+        io.to('chatRoom').emit('usersInRoom', clients.length);
+      });
   });
 });
 
