@@ -197,10 +197,10 @@
 		text-align: center;
 		text-transform: uppercase;
 	}
-	.show-dropdown a{
+	.show-dropdown>a{
 		display: block;
 	}
-	.show-dropdown:hover{
+	.show-dropdown>a:hover{
 		cursor: pointer;
 	}
 	.fixed-plugin .adjustments-line p{
