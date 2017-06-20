@@ -5,6 +5,10 @@
 				<i class="fa fa-cog fa-2x"></i>
 			</a>
 			<ul class="dropdown-menu" v-on:click="toggleMenu">
+							<li class="header-title">Welcome to Chatbox</li>
+							<li class="adjustments-line text-center header-title welcome-title">
+									{{user.username}}
+				</li>
 				<li class="header-title">Online Users</li>
 				<li class="adjustments-line text-center">
 				<span data-color="success" class="badge filter badge-success text-center" style="padding-top:5px"><span v-html="online_users"></span></span>
@@ -15,29 +19,29 @@
 					</a> -->
 				</li>
 				<li class="header-title">Choose Avatar Background
-				</li> 
+				</li>
 				<li class="adjustments-line text-center">
 					<a class="switch-trigger active-color">
-						<span data-color="primary" class="badge filter badge-primary active"></span>
-						<span data-color="info" class="badge filter badge-info"></span>
-						<span data-color="success" class="badge filter badge-success"></span>
-						<span data-color="warning" class="badge filter badge-warning"></span>
-						<span data-color="danger" class="badge filter badge-danger"></span>
+						<span @click="changeAvatarBg($event)" data-color="primary" class="badge filter badge-primary"></span>
+						<span @click="changeAvatarBg($event)" data-color="info" class="badge filter badge-info"></span>
+						<span @click="changeAvatarBg($event)" data-color="success" class="badge filter badge-success"></span>
+						<span @click="changeAvatarBg($event)" data-color="warning" class="badge filter badge-warning"></span>
+						<span @click="changeAvatarBg($event)" data-color="danger" class="badge filter badge-danger"></span>
 					</a>
-				</li> 
+				</li>
 				<li class="button-container">
 
-				</li> 
+				</li>
 				<li class="button-container">
 
-				</li> 
-				<li class="header-title">Thank you for visiting!</li> 
+				</li>
+				<li class="header-title">Thank you for visiting!</li>
 				<li class="button-container">
 					<div>
 						<a href="http://facebook.com/levienthuong" target="_blank" class="btn btn-facebook btn-icon">
 							<i class="fa fa-fw fa-facebook"></i>
-						</a> 
-						<a href="http://github.com/vienthuong" class="btn btn-pinterest btn-icon"><i class="fa fa-fw fa-github"></i></a> 
+						</a>
+						<a href="http://github.com/vienthuong" class="btn btn-pinterest btn-icon"><i class="fa fa-fw fa-github"></i></a>
 						<a href="mail:levienthuong@gmail.com" class="btn btn-twitter btn-icon"><i class="fa fa-fw fa-google"></i></a>
 					</div>
 				</li>
@@ -51,14 +55,34 @@
 		data(){
 			return {
 				showMenu:false,
+				user:JSON.parse(localStorage.getItem('user')),
 			}
 		},
 		methods:{
 			toggleMenu(){
 				this.showMenu = !this.showMenu;
 			},
+			changeAvatarBg($event){
+				$('.badge').removeClass('active');
+				var el = $event.currentTarget;
+				var elColor = $(el).css('backgroundColor');
+				$(el).addClass('active');
+				this.$parent.user.avatarBg = elColor;
+				this.user.avatarBg = elColor;
+				localStorage.setItem('user',JSON.stringify(this.user));
+			}
 		},
-		props:['online_users']
+		props:['online_users'],
+		mounted(){
+			var badges = $('.badge');
+			var vm = this;
+			Array.from(badges).forEach(function(item,index){
+				var bgColor = $(item).css('backgroundColor');
+				if(bgColor==vm.user.avatarBg){
+					$(item).addClass('active');
+				};
+			});
+		}
 	}
 </script>
 <style scoped>
@@ -260,7 +284,12 @@
 			color: $white-color;
 		}
 	}
-
+	.welcome-title{
+		    font-weight: bold;
+    text-transform: uppercase;
+    color: deepskyblue;
+    letter-spacing: 5px;
+	}
 	.btn-twitter {
 		border-color: $social-twitter;
 		color: $social-twitter;

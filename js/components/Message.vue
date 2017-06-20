@@ -1,7 +1,7 @@
 
 <template>
   <li class="message" v-bind:class="{left:mes.user.username==me,right:mes.user.username!=me,appeared:is_appeared}" ref="newMes">
-    <div v-bind:title="mes.user.username" class="avatar">
+    <div v-bind:title="mes.user.username" class="avatar" v-bind:style="{backgroundColor:mes.user.avatarBg}">
 
     </div>
     <div class="text_wrapper" v-bind:style="{color:mes.user.bgColor.hex}">
@@ -26,6 +26,9 @@
         created: function(){
         },
         mounted:function() {
+          this.$on('avatarBgChanged',function(color){
+            console.log(color);
+          })
         }
     }
 </script>
