@@ -12,8 +12,10 @@
     </div>
   </li>
   <li v-else class="message bot appeared">
-   <div class="text_wrapper" v-bind:style="{color:mes.user.bgColor.hex}">
-    <div class="text" v-bind:style="{color:mes.user.txtColor.hex}" v-html="mes.message_text">
+   <div class="text_wrapper" v-bind:class="{imgWrapper:mes.type=='askImg'}" v-bind:style="{color:mes.user.bgColor.hex}">
+    <div v-if="mes.type!='askImg'" class="text" v-bind:style="{color:mes.user.txtColor.hex}" v-html="mes.message_text">
+      </div>
+      <div v-else class="text imgMeme" v-bind:style="{color:mes.user.txtColor.hex}" style="height:200px" v-html="mes.message_text">
       </div>
       <span class="sender" v-if="mes.user.username!=me" v-bind:style="{color:mes.user.txtColor.hex}">{{mes.user.username}}</span>
       </div>
@@ -64,5 +66,19 @@
   }
   .text{
     font-family:arial,sans-serif;
+  }
+   .imgWrapper{
+    text-align: center;
+    /*min-height: 200px;*/
+  }
+  .imgWrapper:before {
+    content: ' ';
+    display: inline-block;
+    vertical-align: middle;
+    min-height: 200px;
+  }
+  .imgMeme{
+    display: inline-block;
+    vertical-align: middle;
   }
 </style>
