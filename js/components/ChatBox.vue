@@ -195,6 +195,9 @@ updated(){
  }
 </script>
 <style scoped>
+  .title{
+    padding-left: 200px;
+  }
   .chat_window{
     border:1px solid rgba(0,0,0,0.2);
   }
