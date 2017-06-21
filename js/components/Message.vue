@@ -1,6 +1,6 @@
 
 <template>
-  <li class="message" v-bind:class="{left:mes.user.username==me,right:mes.user.username!=me,appeared:is_appeared}" ref="newMes">
+  <li v-if="mes.user.username!='Bot'" class="message" v-bind:class="{left:mes.user.username==me,right:mes.user.username!=me,appeared:is_appeared}" ref="newMes">
     <div v-bind:title="mes.user.username" class="avatar" v-bind:style="{backgroundColor:mes.user.avatarBg}">
 
     </div>
@@ -10,6 +10,13 @@
       </div>
       <span class="sender" v-if="mes.user.username!=me" v-bind:style="{color:mes.user.txtColor.hex}">{{mes.user.username}}</span>
     </div>
+  </li>
+  <li v-else class="message bot appeared">
+   <div class="text_wrapper" v-bind:style="{color:mes.user.bgColor.hex}">
+    <div class="text" v-bind:style="{color:mes.user.txtColor.hex}" v-html="mes.message_text">
+      </div>
+      <span class="sender" v-if="mes.user.username!=me" v-bind:style="{color:mes.user.txtColor.hex}">{{mes.user.username}}</span>
+      </div>
   </li>
 </template>
 
@@ -37,10 +44,13 @@
     from{opacity: 0}
     to{opacity: 1}
   }
+  .bot .text_wrapper{
+    width:100%;
+  }
   .text_wrapper{
     background-color: currentColor;
   }
-  .message{
+  .message,.bot{
     transition: 0.5s ease-in-out!important;
     animation-name: fadeIn;
     animation-duration:0.5s;
@@ -51,5 +61,8 @@
     right:10px;
     opacity: 0.7;
     font-size:13px;
+  }
+  .text{
+    font-family:arial,sans-serif;
   }
 </style>

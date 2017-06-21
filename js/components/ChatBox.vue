@@ -24,7 +24,7 @@
     <chatlog :chatlog="chatlog" :myScroll="myScroll"></chatlog>
     <div class="bottom_wrapper clearfix">
       <div class="message_input_wrapper">
-        <input class="message_input" v-model="message_text" v-on:keyup.13="sendMessage" placeholder="Type your message here..." />
+        <input class="message_input" v-model="message_text" v-on:keyup.13="sendMessage" placeholder="Type your message here..." autofocus="true" />
       </div>
       <div class="send_message">
         <div class="icon">
@@ -42,7 +42,18 @@
 <script>
   import chatlog from './ChatLog.vue';
   import cmenu from './ChatboxMenu.vue';
-  import { Compact } from 'vue-color'
+  import { Compact } from 'vue-color';
+  import axios from 'axios';
+
+  const defaultBotUser = {
+           username:'Bot',
+          txtColor:{hex:'#fff'},
+          bgColor:{hex:'#7B64FF'},
+          type:''
+        };
+  const helpKeywords = [
+    '/help','/ask','/me'
+  ];
   export default {
     sockets:{
       connect(){
@@ -68,6 +79,11 @@
       'user.txtColor'(){
         this.showCompact('text');
         localStorage.setItem('user',JSON.stringify(this.user));
+      },
+    },
+    computed:{
+      submitted_text(){
+        return this.checkInput(this.message_text);
       }
     },
     data(){
@@ -78,7 +94,12 @@
         myScroll:{},
         message_text:'',
         user: JSON.parse(localStorage.getItem('user')),
-        chatlog : []
+        chatlog : [
+          {
+            message_text: "Chào mừng các bạn đến với Color Chatbox<br>Nhập /help để xem hướng dẫn",
+            user:defaultBotUser
+          }
+        ]
       }
     },
     components:{
@@ -96,17 +117,76 @@
         }
       },
       sendMessage(){
-        if(this.message_text==''){
+        if(this.message_text=='' || !this.submitted_text){
+          this.message_text='';
           return false;
         }
         var message = {
-          message_text: this.message_text,
+          message_text: this.submitted_text,
           user: this.user,
         }
         this.$socket.emit('message_sent', message);
         this.chatlog.push(message);
         this.updateScroll();
         this.message_text = '';
+      },
+      checkInput(input){
+        if(input=='/help'){
+          if(this.chatlog[this.chatlog.length-1].user.type == 'helpMenu'){
+            return false
+          }
+          this.botReply('Các chức năng của Chatbox:<br><ul>'+
+            '<li><strong>/help</strong>: Xem bảng trợ giúp</li>'
+            +'<li><strong>/ask [câu hỏi]</strong>: Hỏi đáp yes/no</li>'
+            +'</ul>','helpMenu');
+          return false;
+        }
+        if(_.startsWith(input, '/ask')){
+          var question = _.split(input, '/ask ', 2)[1];
+           if (question.indexOf('?') === -1 || question.length<=4) {
+            this.botReply('Sai cú pháp hoặc quá ngắn','ask');
+            return false;
+          }else{
+             this.message_text = question;
+             this.sendMessage();
+             var result = this.getAnswer();
+             console.log(result.answer);
+             // setTimeout(()=>{console.log(result.answer)},5000);
+            this.botReply(result.answer,'ask');
+            this.botReply(result.img,'ask');
+             return false;
+          }
+          console.log(question);
+        }
+        return input;
+      },
+      getAnswer(){
+        var result = {
+          answer:'',
+          img:''
+        };
+        new Promise((resolve, reject)=>{
+        axios.get('https://yesno.wtf/api')
+          .then((response) =>{
+            result.answer = '<span style="font-weight:bold;color:blue">' + _.capitalize(response.data.answer) + '</span>';
+            result.img = '<img class="meme-img img-responsive" src="' + response.data.image + '" alt="">';
+            resolve(result);
+          })
+          .catch((error) => {
+            result.answer = 'Server tạch' + error;
+            reject(error);
+          });
+        });
+          return result;
+      },
+      botReply(msg,type){
+        var message = {
+          message_text: msg,
+          user: defaultBotUser,
+        }
+        message.user.type = type;
+        this.chatlog.push(message);
+        this.updateScroll();
       },
       updateScroll(){
         setTimeout(()=>{
