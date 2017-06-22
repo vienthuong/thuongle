@@ -37,7 +37,10 @@
         mounted:function() {
           this.$on('avatarBgChanged',function(color){
             console.log(color);
-          })
+          });
+          // setTimeout(()=>{
+          //             $('.bot').fadeOut('slow');
+          // },5000);
         }
     }
 </script>
@@ -56,6 +59,15 @@
     transition: 0.5s ease-in-out!important;
     animation-name: fadeIn;
     animation-duration:0.5s;
+  }
+  .bot{
+    opacity: 1!important;
+    animation-name: fadeOut;
+    animation-duration:5s;
+  }
+  @keyframes fadeOut{
+    from{display: block}
+    to{display: none}
   }
   .sender{
     position: absolute;
@@ -81,4 +93,5 @@
     display: inline-block;
     vertical-align: middle;
   }
+ 
 </style>

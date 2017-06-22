@@ -6,14 +6,14 @@
         <div class="buttons">
           <div class="button close" v-bind:title="countUsers + ' Online User(s)'">
           </div>
-          <div class="button minimize" title="Chatbox Help" v-on:click="botReply(helpMes,'helpMenu')">
+          <div class="button minimize" title="Chatbox Help" v-on:click="botReply(helpMes,'private')">
           </div>
           <div class="button maximize" title="Clear Chatbox" v-on:click="clearChatBox">
           </div>
         </div>
         <div class="pull-right">
           <a href="/ask" target="_noblank" title="Ask Page"><span class="bgColor helper"><i class="fa fa-font"></i></span></a>
-          <a v-on:click="botReply(helpMes,'helpMenu')" title="Chatbox Help"><span class="bgColor helper"><i class="fa fa-book"></i></span></a>
+          <a v-on:click="botReply(helpMes,'private')" title="Chatbox Help"><span class="bgColor helper"><i class="fa fa-book"></i></span></a>
           <a v-on:click="clearChatBox" title="Clear Chatbox"><span class="bgColor helper"><i class="fa fa-refresh fa-spin fa-3x fa-fw"></i></span></a>
 
           <a v-on:click="showCompact('background')" title="Background Message Color"><span class="bgColor" v-bind:style="{backgroundColor:user.bgColor.hex}">B</span></a>
@@ -127,7 +127,7 @@ export default {
     },
     checkInput(input){
       if(input=='/help'){
-        this.botReply(helpMes,'helpMenu');
+        this.botReply(helpMes,'private');
         return false;
       }
       if(_.startsWith(input, '/ask')){
@@ -141,8 +141,8 @@ export default {
       return input;
     },
     botReply(msg,type){
-      if(type=='helpMenu'){
-        if(this.chatlog[this.chatlog.length-1].type == 'helpMenu'){
+      if(type=='private'){
+        if(this.chatlog[this.chatlog.length-1].type == 'private'){
           return false;
         }
       };
@@ -152,14 +152,16 @@ export default {
         type:type
       }
       this.chatlog.push(message);
+      if(message.type!='private' && message.type!='error'){
       this.$socket.emit('message_sent', message);
+      }
       this.updateScroll();
     },
     askWTF(input){
       var vm = this;
       var question = _.split(input, '/ask ', 2)[1];
       if (question.indexOf('?') === -1 || question.length<=4) {
-        vm.botReply('Sai cú pháp hoặc quá ngắn','ask');
+        vm.botReply('Sai cú pháp hoặc quá ngắn','error');
         return false;
       }else{
        vm.message_text = question;
