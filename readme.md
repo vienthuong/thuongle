@@ -1,7 +1,5 @@
-# Node.js Socket.io Example
+# Colorful Chatbox with VueJs + SocketIo
 
-This example accompanies the
-[Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
-tutorial.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+Live Demo: http://thuongle.herokuapp.com/
+#Feature: Enter /help on Chatbox to see some simple features.
+#Please wait abit before site completely loaded because this site's using free dyno.
